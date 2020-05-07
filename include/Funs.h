@@ -20,6 +20,6 @@ struct Daughters {
 
 void GenerateDecay(TGenPhaseSpace& event, Daughters& D, TRandom3 *rand);
 
-void SetMisID(Daughters& D, string particle);
+void SetMisID(Daughters& D, std::string misID);
 
 #endif //SIMULATION_FUNS_H

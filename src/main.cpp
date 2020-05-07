@@ -14,37 +14,47 @@ int main() {
 
     // Phase space generation
     TLorentzVector P(0, 0, 0, mB);      // Mother
-    double FinalMasses[2] = {mPi, mPi}; // Daughters
-    TGenPhaseSpace event;               // Event generator
-    event.SetDecay(P, 2, FinalMasses);  // Set how the decay will be
+    double FinalMasses[4] = {mPi, mK, mPi, mK};  // Daughters
+    TGenPhaseSpace event;                        // Event generator
+    event.SetDecay(P, 4, FinalMasses);    // Set how the decay will be
 
-    // Daughters structure (just two TLorentzVectors)
+    // Daughters structure (just four TLorentzVectors)
     Daughters D;
-    TLorentzVector diPion;
+    TLorentzVector Reco_mass;
 
-    // Prepare the plots
-    TCanvas *c = new TCanvas("", "", 800, 600);
-    TH1D   *h1 = new TH1D("", "", 50, 5.2, 5.8);
-    TH1D   *h2 = new TH1D("", "", 50, 5.2, 5.8);
+    // Prepare the histograms
+    TCanvas *c       = new TCanvas("", "", 800, 600);
+    TH1D   *original = new TH1D("", "", 50, 4.9, 5.6);
+    TH1D   *misID_1  = new TH1D("", "", 50, 4.9, 5.6);
+    TH1D   *misID_2  = new TH1D("", "", 50, 4.9, 5.6);
 
     // Generate true decays
     for (unsigned int i = 0; i < NEvents; i++) {
         GenerateDecay(event, D, rand);
-        diPion = *(D.p1) + *(D.p2);
-        h1->Fill(diPion.M());
+        Reco_mass = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
+        original->Fill(Reco_mass.M());
     }
 
-    // Generate misID decays
+    // Generate misID decays (true: Pion; identified: Kaon)
     for (unsigned int k = 0; k < NEvents; k++) {
         GenerateDecay(event, D, rand);
-        SetMisID(D);
-        diPion = *(D.p1) + *(D.p2);
-        h2->Fill(diPion.M());
+        SetMisID(D, "Pion->Kaon");
+        Reco_mass = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
+        misID_1->Fill(Reco_mass.M());
+    }
+
+    // Generate misID decays (true: Kaon; identified: Pion)
+    for (unsigned int l = 0; l < NEvents; l++) {
+        GenerateDecay(event, D, rand);
+        SetMisID(D, "Kaon->Pion");
+        Reco_mass = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
+        misID_2->Fill(Reco_mass.M());
     }
 
     c->cd();
-    h1->Draw("h");
-    h2->Draw("h,same");
+    original->Draw("h");
+    misID_1->Draw("h,same");
+    misID_2->Draw("h,same");
     c->Print("./output.pdf");
 
 

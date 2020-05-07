@@ -3,6 +3,9 @@
 //
 
 #include "../include/funs.h"
+#include <iostream>
+
+const double mPi = 0.139571, mK = 0.493677;
 
 
 void GenerateDecay(TGenPhaseSpace& event, Daughters& D, TRandom3 *rand) {
@@ -15,17 +18,19 @@ void GenerateDecay(TGenPhaseSpace& event, Daughters& D, TRandom3 *rand) {
         if (height < 1.0) { // We accept the event
             D.p1 = event.GetDecay(0);
             D.p2 = event.GetDecay(1);
+            D.p3 = event.GetDecay(2);
+            D.p4 = event.GetDecay(3);
             j++;
         }
     }
 }
 
-void SetMisID(Daughters& D, string misID) {
-    if (misID_type == "Pion->Kaon") {
+void SetMisID(Daughters& D, std::string misID) {
+    if (misID == "Pion->Kaon") {
         D.p1->SetPtEtaPhiM( D.p1->Pt(), D.p1->Eta(), D.p1->Phi(), mK);
     }
 
-    elif (misID_type == "Kaon->Pion") {
+    else if (misID == "Kaon->Pion") {
         
         D.p2->SetPtEtaPhiM( D.p2->Pt(), D.p2->Eta(), D.p2->Phi(), mPi);
     }
