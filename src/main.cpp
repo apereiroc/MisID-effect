@@ -20,7 +20,7 @@ int main() {
 
     // Daughters structure (just four TLorentzVectors)
     Daughters D;
-    TLorentzVector Reco_mass;
+    TLorentzVector Reconstructed;
 
     // Prepare the histograms
     TCanvas *c       = new TCanvas("", "", 800, 600);
@@ -31,24 +31,24 @@ int main() {
     // Generate true decays
     for (unsigned int i = 0; i < NEvents; i++) {
         GenerateDecay(event, D, rand);
-        Reco_mass = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
-        original->Fill(Reco_mass.M());
+        Reconstructed = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
+        original->Fill(Reconstructed.M());
     }
 
     // Generate misID decays (true: Pion; identified: Kaon)
     for (unsigned int k = 0; k < NEvents; k++) {
         GenerateDecay(event, D, rand);
         SetMisID(D, "Pion->Kaon");
-        Reco_mass = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
-        misID_1->Fill(Reco_mass.M());
+        Reconstructed = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
+        misID_1->Fill(Reconstructed.M());
     }
 
     // Generate misID decays (true: Kaon; identified: Pion)
     for (unsigned int l = 0; l < NEvents; l++) {
         GenerateDecay(event, D, rand);
         SetMisID(D, "Kaon->Pion");
-        Reco_mass = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
-        misID_2->Fill(Reco_mass.M());
+        Reconstructed = *(D.p1) + *(D.p2) + *(D.p3) + *(D.p4);
+        misID_2->Fill(Reconstructed.M());
     }
 
     c->cd();
