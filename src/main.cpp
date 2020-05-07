@@ -14,7 +14,7 @@ int main() {
 
     // Phase space generation
     TLorentzVector P(0, 0, 0, mB);      // Mother
-    double FinalMasses[4] = {mPi, mK, mPi, mK};  // Daughters
+    double FinalMasses[4] = {mK, mPi, mK, mPi};  // Daughters
     TGenPhaseSpace event;                        // Event generator
     event.SetDecay(P, 4, FinalMasses);    // Set how the decay will be
 
