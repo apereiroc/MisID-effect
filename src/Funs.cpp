@@ -26,15 +26,15 @@ void GenerateDecay(TGenPhaseSpace& event, Daughters& D, TRandom3 *rand) {
 }
 
 void SetMisID(Daughters& D, std::string misID) {
-    if (misID == "Pion->Kaon") {
-        D.p1->SetPtEtaPhiM( D.p1->Pt(), D.p1->Eta(), D.p1->Phi(), mK);
+    if (misID == "Kaon->Pion") {
+        D.p1->SetPtEtaPhiM( D.p1->Pt(), D.p1->Eta(), D.p1->Phi(), mPi);
     }
 
-    else if (misID == "Kaon->Pion") {
-        
-        D.p2->SetPtEtaPhiM( D.p2->Pt(), D.p2->Eta(), D.p2->Phi(), mPi);
+    else if (misID == "Pion->Kaon") {
+
+        D.p2->SetPtEtaPhiM( D.p2->Pt(), D.p2->Eta(), D.p2->Phi(), mK);
     }
 
     else std::cout << "MisID not understood!" << std::endl;
-    
+
 }

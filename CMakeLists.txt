@@ -10,5 +10,5 @@ include("${ROOT_USE_FILE}")
 # This is required on if there is more than one flag (like on macOS)
 separate_arguments(ROOT_EXE_LINKER_FLAGS)
 
-add_executable(simulation src/main.cpp src/funs.cpp include/funs.h)
+add_executable(simulation src/main.cpp src/funs.cpp include/funs.h src/funs.cpp)
 target_link_libraries(simulation PUBLIC ${ROOT_LIBRARIES} ${ROOT_EXE_LINKER_FLAGS})
