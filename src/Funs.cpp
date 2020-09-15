@@ -4,6 +4,9 @@
 
 #include "../include/funs.h"
 #include <iostream>
+#include <TH1D.h>
+#include <TCanvas.h>
+#include <TLegend.h>
 
 const double mPi = 0.139571, mK = 0.493677;
 
@@ -36,4 +39,36 @@ void SetMisID(Daughters& D, std::string misID) {
 
     else std::cout << "MisID not understood!" << std::endl;
 
+}
+
+void PlotDistributions(TH1D* original, TH1D* misID_1, TH1D* misID_2) {
+
+    // Create canvas
+    TCanvas *c = new TCanvas("", "", 800, 600);
+
+    // Create legend and add entries
+    auto leg = new TLegend(0.13,0.6,0.53,0.8);
+    leg->SetFillColor(kWhite);
+    leg->SetLineColor(kWhite);
+    leg->AddEntry(original, "Original distribution", "pe");
+    leg->AddEntry(misID_1, "Pion->Kaon", "pe");
+    leg->AddEntry(misID_2, "Kaon->Pion", "pe");
+
+    // Draw the original distribution
+    original->SetLineColor(kGreen);
+    original->Draw("h");
+
+    // Draw the first misID
+    misID_1->SetLineColor(kRed);
+    misID_1->Draw("h,same");
+
+    // Draw the second misID
+    misID_2->SetLineColor(kBlue);
+    misID_2->Draw("h,same");
+
+    // Draw the legend
+    leg->Draw("same");
+
+    // Save canvas
+    c->Print("./output.pdf");
 }
