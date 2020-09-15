@@ -9,6 +9,7 @@
 #include <TLorentzVector.h>
 #include <TRandom3.h>
 #include <TGenPhaseSpace.h>
+#include <TH1D.h>
 
 
 struct Daughters {
@@ -21,5 +22,7 @@ struct Daughters {
 void GenerateDecay(TGenPhaseSpace& event, Daughters& D, TRandom3 *rand);
 
 void SetMisID(Daughters& D, std::string misID);
+
+void PlotDistributions(TH1D* original, TH1D* misID_1, TH1D* misID_2);
 
 #endif //SIMULATION_FUNS_H
