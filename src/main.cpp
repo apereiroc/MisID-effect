@@ -23,7 +23,6 @@ int main() {
     TLorentzVector Reconstructed;
 
     // Prepare the histograms
-    TCanvas *c       = new TCanvas("", "", 800, 600);
     TH1D   *original = new TH1D("", "", 50, 4.9, 5.6);
     TH1D   *misID_1  = new TH1D("", "", 50, 4.9, 5.6);
     TH1D   *misID_2  = new TH1D("", "", 50, 4.9, 5.6);
@@ -51,11 +50,7 @@ int main() {
         misID_2->Fill(Reconstructed.M());
     }
 
-    c->cd();
-    original->Draw("h");
-    misID_1->Draw("h,same");
-    misID_2->Draw("h,same");
-    c->Print("./output.pdf");
+    PlotDistributions(original, misID_1, misID_2);
 
 
     return 0;
